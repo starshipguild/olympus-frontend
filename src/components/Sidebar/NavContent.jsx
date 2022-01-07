@@ -66,6 +66,9 @@ function NavContent({ handleDrawerToggle }) {
     if (currentPath.indexOf("giveredeem") >= 0 && page == "give/redeem") {
       return true;
     }
+    if ((currentPath.indexOf("bonds-v1") >= 0 || currentPath.indexOf("choose_bond") >= 0) && page === "bonds-v1") {
+      return true;
+    }
     if ((currentPath.indexOf("bonds") >= 0 || currentPath.indexOf("choose_bond") >= 0) && page === "bonds") {
       return true;
     }
@@ -144,7 +147,7 @@ function NavContent({ handleDrawerToggle }) {
                           }
                         >
                           <Typography variant="body2">
-                            <Trans>Bond discounts</Trans>
+                            <Trans>Highest ROI</Trans>
                           </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -155,7 +158,7 @@ function NavContent({ handleDrawerToggle }) {
                               return (
                                 <Link
                                   component={NavLink}
-                                  to={`/bonds/${bond.name}`}
+                                  to={`/bonds-v1/${bond.name}`}
                                   key={i}
                                   className={"bond"}
                                   onClick={handleDrawerToggle}
