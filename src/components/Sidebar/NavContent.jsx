@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Social from "./Social";
 import externalUrls from "./externalUrls";
-import { ReactComponent as OlympusIcon } from "../../assets/icons/olympus-nav-header.svg";
+import { ReactComponent as StarshipIcon } from "../../assets/icons/starship-nav-header.svg";
 import { t, Trans } from "@lingui/macro";
 import { trim } from "../../helpers";
 import { useWeb3Context } from "src/hooks/web3Context";
@@ -28,6 +28,8 @@ import { useDispatch } from "react-redux";
 import { ExpandMore } from "@material-ui/icons";
 import { useAppSelector } from "src/hooks";
 import { NavItem } from "@olympusdao/component-library";
+import { IoPawOutline, IoLeaf } from "react-icons/io5";
+import { AiFillWallet, AiFillFolder } from "react-icons/ai";
 
 function NavContent({ handleDrawerToggle }) {
   const [isActive] = useState();
@@ -60,10 +62,10 @@ function NavContent({ handleDrawerToggle }) {
       <Box className="dapp-sidebar-inner" display="flex" justifyContent="space-between" flexDirection="column">
         <div className="dapp-menu-top">
           <Box className="branding-header">
-            <Link href="https://olympusdao.finance" target="_blank">
+            <Link href="https://starshipguild.com" target="_blank">
               <SvgIcon
                 color="primary"
-                component={OlympusIcon}
+                component={StarshipIcon}
                 viewBox="0 0 151 100"
                 style={{ minWdth: "151px", minHeight: "98px", width: "151px" }}
               />
@@ -77,7 +79,7 @@ function NavContent({ handleDrawerToggle }) {
               {networkId === NetworkId.MAINNET || networkId === NetworkId.TESTNET_RINKEBY ? (
                 <>
                   <NavItem to="/dashboard" icon={"dashboard"} label={t`Dashboard`} onClick={handleDrawerToggle} />
-                  <NavItem to="/bonds" icon="bond" label={t`Bond`} onClick={handleDrawerToggle} />
+                  <NavItem to="/bonds" icon="bond" label={t`Mint`} onClick={handleDrawerToggle} />
                   <div className="dapp-menu-data discounts">
                     <div className="bond-discounts">
                       <Accordion className="discounts-accordion" square defaultExpanded="true">

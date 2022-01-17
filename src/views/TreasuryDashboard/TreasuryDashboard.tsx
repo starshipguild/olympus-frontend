@@ -2,8 +2,19 @@ import { memo } from "react";
 import "./treasury-dashboard.scss";
 import { Paper, Grid, Box, Zoom, Container, useMediaQuery, Typography, SvgIcon } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import { MarketCap, OHMPrice, GOHMPrice, CircSupply, BackingPerOHM, CurrentIndex } from "./components/Metric/Metric";
+import {
+  MarketCap,
+  Price,
+  Backing,
+  OHMPrice,
+  GOHMPrice,
+  CircSupply,
+  BackingPerOHM,
+  CurrentIndex,
+} from "./components/Metric/Metric";
 import { ReactComponent as InfoIcon } from "../../assets/icons/info-fill.svg";
+import { IoLeaf } from "react-icons/io5";
+import { t } from "@lingui/macro";
 
 import {
   TotalValueDepositedGraph,
@@ -14,6 +25,8 @@ import {
   RunwayAvailableGraph,
 } from "./components/Graph/Graph";
 import { MetricCollection } from "@olympusdao/component-library";
+import { wETHImg } from "src/assets/tokens/wETH.svg";
+
 const TreasuryDashboard = memo(() => {
   const isSmallScreen = useMediaQuery("(max-width: 650px)");
   const isVerySmallScreen = useMediaQuery("(max-width: 379px)");
@@ -26,6 +39,46 @@ const TreasuryDashboard = memo(() => {
           paddingRight: isSmallScreen || isVerySmallScreen ? "0" : "3.3rem",
         }}
       >
+        <Box className="hero-metrics">
+          <Paper className="ohm-card">
+            <Grid className="mint-font" item xs={12}>
+              <IoLeaf /> {t`Mint`}
+            </Grid>
+            <MetricCollection>
+              <Price />
+              <Backing />
+            </MetricCollection>
+            <Paper className="ohm-card">
+              <Grid container direction="row" justifyContent="flex-start" alignItems="center">
+                <Grid item xs={1}>
+                  Icon
+                </Grid>
+                <Grid item xs={1}>
+                  Coin Name
+                </Grid>
+                <Grid container direction="row" justifyContent="space-between" spacing={1} item xs={3}>
+                  <div>
+                    Discount <br />
+                    2.05%{" "}
+                  </div>
+                  <div>+ </div>
+                  <div>
+                    Autostake <br />
+                    4.25%{" "}
+                  </div>
+                  <div>= </div>
+                  <div>
+                    Autostake <br />
+                    4.25%{" "}
+                  </div>
+                </Grid>
+                <Grid item xs={1}>
+                  Button
+                </Grid>
+              </Grid>
+            </Paper>
+          </Paper>
+        </Box>
         <Box className="hero-metrics">
           <Paper className="ohm-card">
             <MetricCollection>

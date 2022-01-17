@@ -20,6 +20,25 @@ export const MarketCap = () => {
   );
 };
 
+export const Price = () => {
+  const price = 14.23;
+  return (
+    <Metric label={t`STAR Price`} metric={formatCurrency(price, 0)} isLoading={price ? false : true} {...sharedProps} />
+  );
+};
+
+export const Backing = () => {
+  const price = 7.05;
+  return (
+    <Metric
+      label={t`Backing Per STAR`}
+      metric={formatCurrency(price, 0)}
+      isLoading={price ? false : true}
+      {...sharedProps}
+    />
+  );
+};
+
 export const OHMPrice = () => {
   const marketPrice = useSelector(state => state.app.marketPrice);
   return (
