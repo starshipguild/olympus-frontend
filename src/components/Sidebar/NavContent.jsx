@@ -157,14 +157,15 @@ function NavContent({ handleDrawerToggle }) {
                     </div>
                   </div>
                   <NavItem to="/stake" icon="stake" label={t`Stake`} onClick={handleDrawerToggle} />
+                  <NavItem to="/wrap" icon="wrap" label={t`Wrap`} onClick={handleDrawerToggle} />
 
                   {/* NOTE (appleseed-olyzaps): OlyZaps disabled until v2 contracts */}
                   {/*<NavItem to="/zap" icon="zap" label={t`Zap`} /> */}
 
-                  {EnvHelper.isGiveEnabled(location.search) && (
+                  {/* {EnvHelper.isGiveEnabled(location.search) && (
                     <NavItem to="/give" icon="give" label={t`Give`} chip={t`New`} onClick={handleDrawerToggle} />
                   )}
-                  <NavItem to="/wrap" icon="wrap" label={t`Wrap`} onClick={handleDrawerToggle} />
+                  
                   <NavItem
                     href={"https://synapseprotocol.com/?inputCurrency=gOHM&outputCurrency=gOHM&outputChain=43114"}
                     icon="bridge"
@@ -179,7 +180,7 @@ function NavContent({ handleDrawerToggle }) {
                     icon="olympus"
                     label={t`Olympus Pro`}
                     onClick={handleDrawerToggle}
-                  />
+                  /> */}
                   {/* <NavItem to="/33-together" icon="33-together" label={t`3,3 Together`} /> */}
                   <Box className="menu-divider">
                     <Divider />
@@ -196,7 +197,7 @@ function NavContent({ handleDrawerToggle }) {
                   />
                 </>
               )}
-              {Object.keys(externalUrls).map((link, i) => {
+              {/* {Object.keys(externalUrls).map((link, i) => {
                 return (
                   <NavItem
                     href={`${externalUrls[link].url}`}
@@ -205,7 +206,7 @@ function NavContent({ handleDrawerToggle }) {
                     onClick={handleDrawerToggle}
                   />
                 );
-              })}
+              })} */}
             </div>
           </div>
         </div>

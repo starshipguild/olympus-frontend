@@ -13,7 +13,7 @@ import {
   CurrentIndex,
 } from "./components/Metric/Metric";
 import { ReactComponent as InfoIcon } from "../../assets/icons/info-fill.svg";
-import { IoLeaf } from "react-icons/io5";
+import { MdDashboard } from "react-icons/md";
 import { t } from "@lingui/macro";
 
 import {
@@ -39,9 +39,9 @@ const TreasuryDashboard = memo(() => {
           paddingRight: isSmallScreen || isVerySmallScreen ? "0" : "3.3rem",
         }}
       >
-        <Box className="hero-metrics">
+        {/* <Box className="hero-metrics">
           <Paper className="ohm-card">
-            <Grid className="mint-font" item xs={12}>
+            <Grid className="mint-title" item xs={12}>
               <IoLeaf /> {t`Mint`}
             </Grid>
             <MetricCollection>
@@ -78,20 +78,38 @@ const TreasuryDashboard = memo(() => {
               </Grid>
             </Paper>
           </Paper>
-        </Box>
+        </Box> */}
         <Box className="hero-metrics">
           <Paper className="ohm-card">
+            <Grid className="mint-title" item xs={12}>
+              <MdDashboard /> {t`Dashboard`}
+            </Grid>
             <MetricCollection>
-              <MarketCap />
-              <OHMPrice />
-              <GOHMPrice />
-              <CircSupply />
-              <BackingPerOHM />
-              <CurrentIndex />
+              <Paper className="ohm-card">
+                <OHMPrice />
+              </Paper>
+              <Paper className="ohm-card">
+                <MarketCap />
+              </Paper>
+              <Paper className="ohm-card">
+                <Backing />
+              </Paper>
+              <Paper className="ohm-card">
+                <GOHMPrice />
+              </Paper>
+              <Paper className="ohm-card">
+                <CircSupply />
+              </Paper>
+              <Paper className="ohm-card">
+                <BackingPerOHM />
+              </Paper>
+              <Paper className="ohm-card">
+                <CurrentIndex />
+              </Paper>
             </MetricCollection>
           </Paper>
         </Box>
-        <Box className="hero-metrics" style={{ marginTop: "20px" }}>
+        {/* <Box className="hero-metrics" style={{ marginTop: "20px" }}>
           <Alert
             variant="filled"
             icon={false}
@@ -136,7 +154,7 @@ const TreasuryDashboard = memo(() => {
               </Paper>
             </Grid>
 
-            {/*  Temporarily removed until correct data is in the graph */}
+            
             {/* <Grid item lg={6} md={12} sm={12} xs={12}>
               <Paper className="ohm-card">
                 <Chart
@@ -159,7 +177,7 @@ const TreasuryDashboard = memo(() => {
                   isStaked={undefined}
                 />
               </Paper>
-            </Grid> */}
+            </Grid> 
 
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Paper className="ohm-card ohm-chart-card">
@@ -173,7 +191,7 @@ const TreasuryDashboard = memo(() => {
               </Paper>
             </Grid>
           </Grid>
-        </Zoom>
+        </Zoom> */}
       </Container>
     </div>
   );

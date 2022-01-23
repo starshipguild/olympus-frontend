@@ -43,7 +43,7 @@ export const OHMPrice = () => {
   const marketPrice = useSelector(state => state.app.marketPrice);
   return (
     <Metric
-      label={t`OHM Price`}
+      label={t`STAR Price`}
       metric={marketPrice && formatCurrency(marketPrice, 2)}
       isLoading={marketPrice ? false : true}
       {...sharedProps}
@@ -69,7 +69,7 @@ export const BackingPerOHM = () => {
   const backingPerOhm = useSelector(state => state.app.treasuryMarketValue / state.app.circSupply);
   return (
     <Metric
-      label={t`Backing per OHM`}
+      label={t`Backing per STAR`}
       metric={!isNaN(backingPerOhm) && formatCurrency(backingPerOhm, 2)}
       isLoading={backingPerOhm ? false : true}
       {...sharedProps}
@@ -82,10 +82,10 @@ export const CurrentIndex = () => {
   return (
     <Metric
       label={t`Current Index`}
-      metric={currentIndex && trim(currentIndex, 2) + " sOHM"}
+      metric={currentIndex && trim(currentIndex, 2) + " sSTAR"}
       isLoading={currentIndex ? false : true}
       {...sharedProps}
-      tooltip="The current index tracks the amount of sOHM accumulated since the beginning of staking. Basically, how much sOHM one would have if they staked and held a single OHM from day 1."
+      tooltip="The current index tracks the amount of sSTAR accumulated since the beginning of staking. Basically, how much sSTAR one would have if they staked and held a single STAR from day 1."
     />
   );
 };
@@ -95,11 +95,11 @@ export const GOHMPrice = () => {
   return (
     <Metric
       className="metric wsoprice"
-      label={t`gOHM Price`}
+      label={t`gSTAR Price`}
       metric={gOhmPrice && formatCurrency(gOhmPrice, 2)}
       isLoading={gOhmPrice ? false : true}
       {...sharedProps}
-      tooltip={`gOHM = sOHM * index\n\nThe price of gOHM is equal to the price of OHM multiplied by the current index`}
+      tooltip={`gSTAR = sSTAR * index\n\nThe price of gSTAR is equal to the price of STAR multiplied by the current index`}
     />
   );
 };

@@ -7,7 +7,7 @@ import commonSettings, { handleBackdropFilter } from "./global.js";
 
 const darkTheme = {
   color: "#FCFCFC",
-  gold: "#F8CC82",
+  gold: "#10CC7E",
   gray: "#A3A3A3",
   textHighlightColor: "#F4D092",
   backgroundColor: "rgba(0, 0, 0, 1)",
@@ -27,10 +27,10 @@ const darkTheme = {
   primaryButtonBG: "#F4D092",
   primaryButtonHoverBG: "#EDD8B4",
   secondaryButtonHoverBG: "rgba(54, 56, 64, 1)",
-  outlinedPrimaryButtonHoverBG: "#F8CC82",
+  outlinedPrimaryButtonHoverBG: "#10CC7E",
   outlinedPrimaryButtonHoverColor: "#333333",
   outlinedSecondaryButtonHoverBG: "transparent",
-  outlinedSecondaryButtonHoverColor: "#F8CC82", //gold
+  outlinedSecondaryButtonHoverColor: "#10CC7E", //gold
   containedSecondaryButtonHoverBG: "rgba(255, 255, 255, 0.15)",
   graphStrokeColor: "rgba(255, 255, 255, .1)",
   gridButtonHoverBackground: "rgba(255, 255, 255, 0.6)",
@@ -105,7 +105,7 @@ export const dark = responsiveFontSizes(
         },
         MuiSelect: {
           select: {
-            color: "#F8CC82",
+            color: "#10CC7E",
           },
         },
         MuiPaper: {
