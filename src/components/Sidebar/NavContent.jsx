@@ -157,7 +157,7 @@ function NavContent({ handleDrawerToggle }) {
                     </div>
                   </div>
                   <NavItem to="/stake" icon="stake" label={t`Stake`} onClick={handleDrawerToggle} />
-                  <NavItem to="/wrap" icon="wrap" label={t`Wrap`} onClick={handleDrawerToggle} />
+                  {/* <NavItem to="/wrap" icon="wrap" label={t`Wrap`} onClick={handleDrawerToggle} /> */}
 
                   {/* NOTE (appleseed-olyzaps): OlyZaps disabled until v2 contracts */}
                   {/*<NavItem to="/zap" icon="zap" label={t`Zap`} /> */}

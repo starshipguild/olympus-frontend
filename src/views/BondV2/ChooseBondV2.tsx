@@ -13,7 +13,11 @@ import {
   Typography,
   Zoom,
   SvgIcon,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { t, Trans } from "@lingui/macro";
 import { BondDataCard, BondTableData } from "./BondRow";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -40,6 +44,11 @@ function ChooseBondV2() {
   const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
   usePathForNetwork({ pathName: "bonds", networkID: networkId, history });
+  const [expanded, setExpanded] = useState<string | false>(false);
+
+  const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   const bondsV2 = useAppSelector(state => {
     return state.bondingV2.indexes.map(index => state.bondingV2.bonds[index]);
@@ -172,6 +181,64 @@ function ChooseBondV2() {
           </Grid>
         </Box>
       )}
+
+      <Zoom in={true}>
+        <Box width="97%">
+          <div>
+            <Accordion
+              className="faq-accordion-root"
+              expanded={expanded === "panel1"}
+              onChange={handleChange("panel1")}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header">
+                <Typography>Why Mint?</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Minting allows you to buy $STAR at a discount from the market price. You can use a variety of
+                  different cryptocurrencies to mint $STAR. After minting, you will receive $STAR after a five day
+                  waiting period. Using the minting process, the Starship treasury is able to raise money to deploy into
+                  the metaverse. In exchange, the treasury will give you a discount depending on what type of
+                  cryptocurrency you pay with. Learn more in our docs.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === "panel2"} onChange={handleChange("panel2")}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
+                <Typography>How is ROI determinted?</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar diam eros in
+                  elit. Pellentesque convallis laoreet laoreet.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === "panel3"} onChange={handleChange("panel3")}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel3bh-content" id="panel3bh-header">
+                <Typography>Is it better to mint or stake?</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros, vitae egestas
+                  augue. Duis vel est augue.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === "panel4"} onChange={handleChange("panel4")}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel4bh-content" id="panel4bh-header">
+                <Typography>How is the treasury deployed in the metaverse?</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros, vitae egestas
+                  augue. Duis vel est augue.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </div>
+        </Box>
+      </Zoom>
     </div>
   );
 }
