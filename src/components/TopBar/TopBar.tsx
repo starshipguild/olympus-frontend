@@ -1,6 +1,7 @@
-import { AppBar, Toolbar, Box, Button, SvgIcon } from "@material-ui/core";
+import { AppBar, Toolbar, Box, Button, SvgIcon, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { ReactComponent as MenuIcon } from "../../assets/icons/hamburger.svg";
+import { ReactComponent as StarShipNavLogo } from "../../assets/icons/starship_logo_vector.svg";
 import ThemeSwitcher from "./ThemeSwitch";
 import { LocaleSwitcher } from "@olympusdao/component-library";
 import { locales, selectLocale } from "../../locales";
@@ -15,11 +16,12 @@ const useStyles = makeStyles(theme => ({
       width: "100%",
       padding: "10px",
     },
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-    background: "transparent",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "#000",
     backdropFilter: "none",
     zIndex: 10,
+    flexDirection: "row",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -39,8 +41,12 @@ function TopBar({ theme, toggleTheme, handleDrawerToggle }: TopBarProps) {
   const classes = useStyles();
 
   return (
-    <AppBar position="sticky" className={classes.appBar} elevation={0}>
+    <AppBar position="fixed" className={classes.appBar} elevation={1}>
+      <Box>
+        <SvgIcon component={StarShipNavLogo} />
+      </Box>
       <Toolbar disableGutters className="dapp-topbar">
+        <Typography>Logo</Typography>
         <Button
           id="hamburger"
           aria-label="open drawer"

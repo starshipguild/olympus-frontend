@@ -14,7 +14,7 @@ const darkTheme = {
   background: `rgba(0, 0, 0, 1) url(./star_ship_bg.png) no-repeat`,
   bgRepeat: "no-repeat",
   backgroundSize: "contain",
-  paperBg: "rgba(54, 56, 64, 0.6)",
+  paperBg: "rgba(0, 29, 44, 0.6)",
   modalBg: "#24242699",
   popoverBg: "rgba(54, 56, 64, 0.99)",
   menuBg: handleBackdropFilter("rgba(54, 56, 64, 0.5)"),

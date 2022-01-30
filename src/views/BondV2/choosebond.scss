@@ -15,7 +15,7 @@
   .card-header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
   }
 
@@ -132,6 +132,7 @@
     justify-content: space-between;
     display: flex;
     padding-left: 0px !important;
+    margin-left: 2rem;
     div.bond-name {
       width: 60%;
       margin-left: 5px !important;
@@ -184,7 +185,22 @@
     height: 355px;
   }
 }
+.bond-table {
+  border-collapse: separate !important;
+  border-spacing: 0 15px !important;
+}
+.bond-row {
+  border-radius: 10px;
+  margin-bottom: 2rem !important; 
+  background-color: rgba(54, 56, 64, 0.6);
+}
 
 .faq-accordion-root {
   background: none;
+}
+.mint-card {
+  font-size: 2rem;
+  padding-bottom: 1rem;
+  display: flex;
+  justify-content: center;
 }

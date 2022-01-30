@@ -38,6 +38,7 @@ import { getAllBonds, getUserNotes, IBondV2, IUserNote } from "src/slices/BondSl
 import { ReactComponent as ArrowUp } from "../../assets/icons/arrow-up.svg";
 import { useEffect, useState } from "react";
 import { AppDispatch } from "src/store";
+import { IoLeaf } from "react-icons/io5";
 
 function ChooseBondV2() {
   const { networkId, address, provider } = useWeb3Context();
@@ -60,8 +61,17 @@ function ChooseBondV2() {
   const marketPrice: number | undefined = useAppSelector(state => {
     return state.app.marketPrice;
   });
-
+  const circSupply: number | undefined = useAppSelector(state => {
+    return state.app.circSupply;
+  });
+  const treasuryMarketValue: number | undefined = useAppSelector(state => {
+    return state.app.treasuryMarketValue;
+  });
+  let backingPerOhm = 0;
   const treasuryBalance = useAppSelector(state => state.app.treasuryMarketValue);
+  if (treasuryMarketValue && circSupply) {
+    backingPerOhm = treasuryMarketValue / circSupply;
+  }
 
   const formattedTreasuryBalance = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -94,60 +104,29 @@ function ChooseBondV2() {
 
       <Zoom in={true}>
         <Paper className="ohm-card">
-          <Box className="card-header">
-            <Typography variant="h5" data-testid="t">
-              <Trans>Bond</Trans> (4,4)
-            </Typography>
-
-            <ButtonBase>
-              <Typography style={{ lineHeight: "33px" }}>
-                <b>
-                  <Link to="/bonds-v1" style={{ textDecoration: "none", color: "inherit" }}>
-                    <Trans>v1 Bonds</Trans>
-                    <SvgIcon
-                      style={{ margin: "0 0 0 5px", verticalAlign: "text-bottom" }}
-                      component={ArrowUp}
-                      color="primary"
-                    />
-                  </Link>
-                </b>
-              </Typography>
-            </ButtonBase>
+          <Box className="card-header mint-title">
+            <Box>
+              <IoLeaf /> {t`Mint`}
+            </Box>
           </Box>
 
           <MetricCollection>
             <Metric
-              label={t`Treasury Balance`}
-              metric={formattedTreasuryBalance}
-              isLoading={!!treasuryBalance ? false : true}
-            />
-            <Metric
-              label={t`OHM Price`}
+              label={t`STAR Price`}
               metric={formatCurrency(Number(marketPrice), 2)}
               isLoading={marketPrice ? false : true}
+            />
+            <Metric
+              label={t`Backing per STAR`}
+              metric={!isNaN(backingPerOhm) ? formatCurrency(backingPerOhm, 2) : undefined}
+              isLoading={backingPerOhm ? false : true}
             />
           </MetricCollection>
 
           {!isSmallScreen && (
             <Grid container item>
               <TableContainer>
-                <Table aria-label="Available bonds">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="center">
-                        <Trans>Bond</Trans>
-                      </TableCell>
-                      <TableCell align="left">
-                        <Trans>Price</Trans>
-                      </TableCell>
-                      <TableCell align="left">
-                        <Trans>ROI</Trans>
-                      </TableCell>
-                      <TableCell align="left">
-                        <Trans>Duration</Trans>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
+                <Table className="bond-table" aria-label="Available bonds">
                   <TableBody>
                     {bondsV2.map(bond => {
                       if (bond.displayName !== "unknown") return <BondTableData key={bond.index} bond={bond} />;
@@ -161,7 +140,7 @@ function ChooseBondV2() {
             <em>
               <Typography variant="body2">
                 Important: New bonds are auto-staked (accrue rebase rewards) and no longer vest linearly. Simply claim
-                as sOHM or gOHM at the end of the term.
+                as sSTAR at the end of the term.
               </Typography>
             </em>
           </div>

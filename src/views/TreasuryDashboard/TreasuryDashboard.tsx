@@ -57,46 +57,6 @@ const TreasuryDashboard = memo(() => {
           paddingRight: isSmallScreen || isVerySmallScreen ? "0" : "3.3rem",
         }}
       >
-        {/* <Box className="hero-metrics">
-          <Paper className="ohm-card">
-            <Grid className="mint-title" item xs={12}>
-              <IoLeaf /> {t`Mint`}
-            </Grid>
-            <MetricCollection>
-              <Price />
-              <Backing />
-            </MetricCollection>
-            <Paper className="ohm-card">
-              <Grid container direction="row" justifyContent="flex-start" alignItems="center">
-                <Grid item xs={1}>
-                  Icon
-                </Grid>
-                <Grid item xs={1}>
-                  Coin Name
-                </Grid>
-                <Grid container direction="row" justifyContent="space-between" spacing={1} item xs={3}>
-                  <div>
-                    Discount <br />
-                    2.05%{" "}
-                  </div>
-                  <div>+ </div>
-                  <div>
-                    Autostake <br />
-                    4.25%{" "}
-                  </div>
-                  <div>= </div>
-                  <div>
-                    Autostake <br />
-                    4.25%{" "}
-                  </div>
-                </Grid>
-                <Grid item xs={1}>
-                  Button
-                </Grid>
-              </Grid>
-            </Paper>
-          </Paper>
-        </Box> */}
         <Box className="hero-metrics">
           <Paper className="ohm-card">
             <Grid className="mint-title" item xs={12}>
