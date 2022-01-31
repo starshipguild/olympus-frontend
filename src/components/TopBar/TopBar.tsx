@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   appBar: {
     [theme.breakpoints.up("sm")]: {
       width: "100%",
-      padding: "10px",
+      padding: "0 1rem",
     },
     justifyContent: "center",
     alignItems: "center",
@@ -43,7 +43,7 @@ function TopBar({ theme, toggleTheme, handleDrawerToggle }: TopBarProps) {
   return (
     <AppBar position="fixed" className={classes.appBar} elevation={1}>
       <Box>
-        <SvgIcon component={StarShipNavLogo} />
+        <img src="starship-guild-logo.svg" alt="Starship Guild Logo" width="330" height="64" className="topbar-logo" />
       </Box>
       <Toolbar disableGutters className="dapp-topbar">
         <Typography>Logo</Typography>
