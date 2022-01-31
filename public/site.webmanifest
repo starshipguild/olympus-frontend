@@ -1,9 +1,6 @@
 {
-    "short_name": "Starship Guild",
-    "start_url": ".",
-    "homepage": "./",
-    "name": "Starship Guild",
-    "launch_path": "/public/index.html",
+    "name": "",
+    "short_name": "",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
