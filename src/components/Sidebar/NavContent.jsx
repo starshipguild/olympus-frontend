@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Social from "./Social";
 import externalUrls from "./externalUrls";
-import { ReactComponent as StarshipIcon } from "../../assets/icons/starship-nav-header.svg";
+import { ReactComponent as StarshipIcon } from "../../assets/starship-logomark.svg";
 import { t, Trans } from "@lingui/macro";
 import { trim } from "../../helpers";
 import { useWeb3Context } from "src/hooks/web3Context";

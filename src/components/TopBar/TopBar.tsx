@@ -1,4 +1,7 @@
-import { AppBar, Toolbar, Box, Button, SvgIcon, Typography } from "@material-ui/core";
+import { useState } from "react";
+import { AppBar, Toolbar, Box, Button, SvgIcon, Link } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 import { makeStyles } from "@material-ui/core/styles";
 import { ReactComponent as MenuIcon } from "../../assets/icons/hamburger.svg";
 import { ReactComponent as StarShipNavLogo } from "../../assets/icons/starship_logo_vector.svg";
@@ -16,7 +19,7 @@ const useStyles = makeStyles(theme => ({
       width: "100%",
       padding: "0 1rem",
     },
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     background: "#000",
     backdropFilter: "none",
@@ -29,6 +32,28 @@ const useStyles = makeStyles(theme => ({
       display: "none",
     },
   },
+  menuGroup: {
+    alignSelf: "center",
+    display: "flex",
+    justifyContent: "center",
+    cursor: "pointer",
+    width: "100%",
+    alignItems: "center",
+    [theme.breakpoints.down(981)]: {
+      display: "none",
+    },
+  },
+  menuItem: {
+    fontSize: 20,
+    color: "white",
+    padding: "0 1rem",
+    //backgroundColor: "teal",
+    minWidth: "6vw",
+    //height: "65px",
+    // "&:hover": {
+    // backgroundColor: "white",
+    // },
+  },
 }));
 
 interface TopBarProps {
@@ -39,14 +64,39 @@ interface TopBarProps {
 
 function TopBar({ theme, toggleTheme, handleDrawerToggle }: TopBarProps) {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    alert("checked");
+  };
+  const open = Boolean(anchorEl);
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
-    <AppBar position="fixed" className={classes.appBar} elevation={1}>
+    <AppBar position="sticky" className={classes.appBar} elevation={1}>
       <Box>
         <img src="starship-guild-logo.svg" alt="Starship Guild Logo" width="330" height="64" className="topbar-logo" />
       </Box>
+      <Box className={classes.menuGroup}>
+        <Link href={`#/dashboard`} className={classes.menuItem}>
+          Dashboard
+        </Link>
+        <Link href={`#/bonds`} className={classes.menuItem}>
+          Mint
+        </Link>
+        <Link href={`#/stake`} className={classes.menuItem}>
+          Stake
+        </Link>
+        <Link href={`#`} className={classes.menuItem}>
+          Buy
+        </Link>
+      </Box>
       <Toolbar disableGutters className="dapp-topbar">
-        <Typography>Logo</Typography>
         <Button
           id="hamburger"
           aria-label="open drawer"
