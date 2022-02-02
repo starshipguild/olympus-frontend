@@ -142,6 +142,7 @@ export class NodeHelper {
    * returns Array of APIURIs where NOT on invalidNodes list
    */
   static getNodesUris = (networkId: NetworkId) => {
+    console.log(networkId);
     let allURIs = EnvHelper.getAPIUris(networkId);
     let invalidNodes = NodeHelper.currentRemovedNodesURIs;
     // filter invalidNodes out of allURIs

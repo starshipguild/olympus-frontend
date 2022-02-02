@@ -108,44 +108,6 @@ export const getBalances = createAsyncThunk(
       handleContractError(e);
     }
     try {
-      const arbProvider = NodeHelper.getAnynetStaticProvider(NetworkId.ARBITRUM);
-      const gOhmArbContract = GOHM__factory.connect(addresses[NetworkId.ARBITRUM].GOHM_ADDRESS, arbProvider);
-      gOhmOnArbitrum = await gOhmArbContract.balanceOf(address);
-      gOhmOnArbAsSohm = await gOhmContract.balanceFrom(gOhmOnArbitrum.toString());
-    } catch (e) {
-      handleContractError(e);
-    }
-    try {
-      const avaxProvider = NodeHelper.getAnynetStaticProvider(NetworkId.AVALANCHE);
-      const gOhmAvaxContract = GOHM__factory.connect(addresses[NetworkId.AVALANCHE].GOHM_ADDRESS, avaxProvider);
-      gOhmOnAvax = await gOhmAvaxContract.balanceOf(address);
-      gOhmOnAvaxAsSohm = await gOhmContract.balanceFrom(gOhmOnAvax.toString());
-    } catch (e) {
-      handleContractError(e);
-    }
-    try {
-      const polygonProvider = NodeHelper.getAnynetStaticProvider(NetworkId.POLYGON);
-      const gOhmPolygonContract = GOHM__factory.connect(addresses[NetworkId.POLYGON].GOHM_ADDRESS, polygonProvider);
-      gOhmOnPolygon = await gOhmPolygonContract.balanceOf(address);
-      gOhmOnPolygonAsSohm = await gOhmContract.balanceFrom(gOhmOnPolygon.toString());
-    } catch (e) {
-      handleContractError(e);
-    }
-    try {
-      const fantomProvider = NodeHelper.getAnynetStaticProvider(NetworkId.FANTOM);
-      const gOhmFantomContract = GOHM__factory.connect(addresses[NetworkId.FANTOM].GOHM_ADDRESS, fantomProvider);
-      gOhmOnFantom = await gOhmFantomContract.balanceOf(address);
-      gOhmOnFantomAsSohm = await gOhmContract.balanceFrom(gOhmOnFantom.toString());
-    } catch (e) {
-      handleContractError(e);
-    }
-    try {
-      const wsohmContract = new ethers.Contract(addresses[networkID].WSOHM_ADDRESS as string, wsOHM, provider) as WsOHM;
-      wsohmBalance = await wsohmContract.balanceOf(address);
-    } catch (e) {
-      handleContractError(e);
-    }
-    try {
       const ohmContract = new ethers.Contract(
         addresses[networkID].OHM_ADDRESS as string,
         ierc20Abi,
@@ -167,6 +129,7 @@ export const getBalances = createAsyncThunk(
     }
     try {
       const ohmV2Contract = new ethers.Contract(addresses[networkID].OHM_V2 as string, ierc20Abi, provider) as IERC20;
+      console.log(ohmV2Contract);
       ohmV2Balance = await ohmV2Contract.balanceOf(address);
     } catch (e) {
       handleContractError(e);
@@ -410,6 +373,7 @@ export const getMigrationAllowances = createAsyncThunk(
 
     if (addresses[networkID].SOHM_ADDRESS) {
       try {
+        console.log(addresses[networkID].SOHM_ADDRESS);
         const sOhmContract = IERC20__factory.connect(addresses[networkID].SOHM_ADDRESS, provider);
         sOhmAllowance = await sOhmContract.allowance(address, addresses[networkID].MIGRATOR_ADDRESS);
       } catch (e) {
@@ -472,6 +436,8 @@ export const loadAccountDetails = createAsyncThunk(
         ierc20Abi,
         provider,
       ) as IERC20;
+      console.log("star!");
+      console.log(ohmContract.address);
       stakeAllowance = await ohmContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
 
       const sohmContract = new ethers.Contract(addresses[networkID].SOHM_V2 as string, sOHMv2, provider) as SOhmv2;
@@ -488,10 +454,10 @@ export const loadAccountDetails = createAsyncThunk(
       handleContractError(e);
     }
     await dispatch(getBalances({ address, networkID, provider }));
-    await dispatch(getDonationBalances({ address, networkID, provider }));
+    //    await dispatch(getDonationBalances({ address, networkID, provider }));
     await dispatch(getRedemptionBalances({ address, networkID, provider }));
     if (networkID === NetworkId.TESTNET_RINKEBY) {
-      await dispatch(getMockDonationBalances({ address, networkID, provider }));
+      //      await dispatch(getMockDonationBalances({ address, networkID, provider }));
       await dispatch(getMockRedemptionBalances({ address, networkID, provider }));
     } else {
       if (EnvHelper.env.NODE_ENV !== "production") console.log("Give - Contract mocks skipped except on Rinkeby");
@@ -545,6 +511,7 @@ export const calculateUserBondDetails = createAsyncThunk(
     // Calculate bond details.
     const bondContract = bond.getContractForBond(networkID, provider);
     const reserveContract = bond.getContractForReserve(networkID, provider);
+    console.log("reserve: ", reserveContract);
 
     let pendingPayout, bondMaturationBlock;
 

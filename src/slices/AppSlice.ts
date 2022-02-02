@@ -47,10 +47,10 @@ export const loadAppDetails = createAsyncThunk(
       }
     `;
 
-    if (networkID !== NetworkId.MAINNET) {
-      provider = NodeHelper.getMainnetStaticProvider();
-      networkID = NetworkId.MAINNET;
-    }
+    //if (networkID !== NetworkId.MAINNET) {
+    //  provider = NodeHelper.getMainnetStaticProvider();
+    //  networkID = NetworkId.MAINNET;
+    //}
     const graphData = await apollo<{ protocolMetrics: IProtocolMetrics[] }>(protocolMetricsQuery);
 
     if (!graphData || graphData == null) {
@@ -62,11 +62,13 @@ export const loadAppDetails = createAsyncThunk(
     // NOTE (appleseed): marketPrice from Graph was delayed, so get CoinGecko price
     // const marketPrice = parseFloat(graphData.data.protocolMetrics[0].ohmPrice);
     let marketPrice;
+    console.log("trying marketPrice");
     try {
       const originalPromiseResult = await dispatch(
         loadMarketPrice({ networkID: networkID, provider: provider }),
       ).unwrap();
       marketPrice = originalPromiseResult?.marketPrice;
+      console.log(marketPrice);
     } catch (rejectedValueOrSerializedError) {
       // handle error here
       console.error("Returned a null response from dispatch(loadMarketPrice)");
@@ -91,14 +93,19 @@ export const loadAppDetails = createAsyncThunk(
       } as IAppData;
     }
     const currentBlock = await provider.getBlockNumber();
-
+    console.log(currentBlock);
+    console.log(addresses[networkID].STAKING_V2);
+    console.log(addresses[networkID].STAKING_ADDRESS);
     const stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_V2, provider);
     const stakingContractV1 = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
 
     const sohmMainContract = new ethers.Contract(addresses[networkID].SOHM_V2 as string, sOHMv2, provider) as SOhmv2;
-
-    // Calculating staking
+    console.log(sohmMainContract.address);
+    console.log("staking!");
+    console.log(stakingContract.address);
     const epoch = await stakingContract.epoch();
+    console.log("epoch!");
+    console.log(epoch);
     const secondsToEpoch = Number(await stakingContract.secondsToNextEpoch());
     const stakingReward = epoch.distribute;
     const circ = await sohmMainContract.circulatingSupply();

@@ -93,6 +93,8 @@ export const calcBondDetails = createAsyncThunk(
 
     const terms = await bondContract.terms();
     const maxBondPrice = await bondContract.maxPayout();
+    //    console.log(terms);
+    console.log("max price: ", maxBondPrice);
     let debtRatio: BigNumberish;
     try {
       // TODO (appleseed): improve this logic
@@ -101,6 +103,7 @@ export const calcBondDetails = createAsyncThunk(
       } else {
         debtRatio = await bondContract.standardizedDebtRatio();
       }
+      console.log("debt: ", debtRatio);
       debtRatio = Number(debtRatio.toString()) / Math.pow(10, 9);
     } catch (e) {
       debtRatio = BigNumber.from("0");

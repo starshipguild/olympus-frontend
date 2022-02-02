@@ -62,7 +62,7 @@ export const changeMigrationApproval = createAsyncThunk(
     // return early if approval has already happened
     if (migrateAllowance.gt(currentBalance)) {
       dispatch(info("Approval completed."));
-      dispatch(getMigrationAllowances({ address, provider, networkID }));
+      //      dispatch(getMigrationAllowances({ address, provider, networkID }));
       return;
     }
     let approveTx: ethers.ContractTransaction | undefined;
@@ -82,7 +82,7 @@ export const changeMigrationApproval = createAsyncThunk(
       dispatch(error((e as IJsonRPCError).message));
       return;
     } finally {
-      dispatch(getMigrationAllowances({ address, provider, networkID }));
+      //      dispatch(getMigrationAllowances({ address, provider, networkID }));
       if (approveTx) {
         dispatch(clearPendingTxn(approveTx.hash));
       }

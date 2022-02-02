@@ -39,12 +39,12 @@ export const dai = new StableBond({
   displayName: "DAI",
   bondToken: "DAI",
   payoutToken: "OHM",
-  v2Bond: false,
+  v2Bond: true,
   bondIconSvg: DaiImg,
   bondContractABI: DaiBondContract,
   isBondable: {
     [NetworkId.MAINNET]: false,
-    [NetworkId.TESTNET_RINKEBY]: false,
+    [NetworkId.TESTNET_RINKEBY]: true,
     [NetworkId.ARBITRUM]: false,
     [NetworkId.ARBITRUM_TESTNET]: false,
     [NetworkId.AVALANCHE]: false,
@@ -74,7 +74,7 @@ export const dai = new StableBond({
     },
     [NetworkId.TESTNET_RINKEBY]: {
       bondAddress: "0xDea5668E815dAF058e3ecB30F645b04ad26374Cf",
-      reserveAddress: "0xB2180448f8945C8Cc8AE9809E67D6bd27d8B2f2C",
+      reserveAddress: "0x8725B4480284b7E9Dc943B2250aFE206c505E314",
     },
     [NetworkId.Localhost]: {
       bondAddress: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
@@ -138,7 +138,7 @@ export const frax = new StableBond({
   bondContractABI: FraxBondContract,
   isBondable: {
     [NetworkId.MAINNET]: true,
-    [NetworkId.TESTNET_RINKEBY]: false,
+    [NetworkId.TESTNET_RINKEBY]: true,
     [NetworkId.ARBITRUM]: false,
     [NetworkId.ARBITRUM_TESTNET]: false,
     [NetworkId.AVALANCHE]: false,
@@ -418,7 +418,7 @@ export const ohm_dai = new LPBond({
   reserveContract: ReserveOhmDaiContract,
   isBondable: {
     [NetworkId.MAINNET]: false,
-    [NetworkId.TESTNET_RINKEBY]: false,
+    [NetworkId.TESTNET_RINKEBY]: true,
     [NetworkId.ARBITRUM]: false,
     [NetworkId.ARBITRUM_TESTNET]: false,
     [NetworkId.AVALANCHE]: false,
@@ -449,11 +449,11 @@ export const ohm_dai = new LPBond({
     },
     [NetworkId.TESTNET_RINKEBY]: {
       bondAddress: "0xcF449dA417cC36009a1C6FbA78918c31594B9377",
-      reserveAddress: "0x8D5a22Fb6A1840da602E56D1a260E56770e0bCE2",
+      reserveAddress: "0x8725B4480284b7E9Dc943B2250aFE206c505E314",
     },
   },
   lpUrl:
-    "https://app.sushi.com/add/0x64aa3364f17a4d01c6f1751fd97c2bd3d7e7f1d5/0x6b175474e89094c44da98b954eedeac495271d0f",
+    "https://app.uniswap.org/#/add/v2/0x5f217C99dd8287714033b06f8d588d2443a5c2C7/0x8725B4480284b7E9Dc943B2250aFE206c505E314?chain=rinkeby",
 });
 
 export const ohm_daiOld = new LPBond({
@@ -554,7 +554,7 @@ export const ohm_frax = new LPBond({
     },
   },
   lpUrl:
-    "https://app.uniswap.org/#/add/v2/0x64aa3364f17a4d01c6f1751fd97c2bd3d7e7f1d5/0x853d955acef822db058eb8505911ed77f175b99e",
+    "https://app.uniswap.org/#/add/v2/0x5f217C99dd8287714033b06f8d588d2443a5c2C7/0x8725B4480284b7E9Dc943B2250aFE206c505E314?chain=rinkeby",
 });
 
 export const ohm_fraxOld = new LPBond({
@@ -607,7 +607,7 @@ export const ohm_fraxOld = new LPBond({
     },
   },
   lpUrl:
-    "https://app.uniswap.org/#/add/v2/0x853d955acef822db058eb8505911ed77f175b99e/0x383518188c0c6d7730d91b2c03a03c837814a899",
+    "https://app.uniswap.org/#/add/v2/0x5f217C99dd8287714033b06f8d588d2443a5c2C7/0x8725B4480284b7E9Dc943B2250aFE206c505E314?chain=rinkeby",
 });
 
 export const ohm_lusd = new LPBond({
@@ -815,6 +815,7 @@ export const ohm_wethOld = new CustomBond({
       const tokenAddress = this.getAddressForReserve(networkId);
       const bondCalculator = getBondCalculator(networkId, provider, false);
       const tokenAmount = await token.balanceOf(addresses[networkId].TREASURY_ADDRESS);
+      console.log("tokenAmount: ", tokenAmount, tokenAddress);
       const valuation = await bondCalculator.valuation(tokenAddress || "", tokenAmount);
       const markdown = await bondCalculator.markdown(tokenAddress || "");
       let tokenUSD =
@@ -828,20 +829,21 @@ export const ohm_wethOld = new CustomBond({
 // Is it a stableCoin bond? use `new StableBond`
 // Is it an LP Bond? use `new LPBond`
 // Add new bonds to this array!!
-export const allBonds = [
-  dai,
-  frax,
-  eth,
-  cvx,
-  ohm_dai,
-  ohm_daiOld,
-  ohm_frax,
-  ohm_fraxOld,
-  lusd,
-  ohm_lusd,
-  ohm_weth,
-  ohm_wethOld,
-];
+// export const allBonds = [
+//   dai,
+//   frax,
+//   eth,
+//   cvx,
+//   ohm_dai,
+//   ohm_daiOld,
+//   ohm_frax,
+//   ohm_fraxOld,
+//   lusd,
+//   ohm_lusd,
+//   ohm_weth,
+//   ohm_wethOld,
+// ];
+export const allBonds = [eth, ohm_dai];
 // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
 export const allExpiredBonds = [cvx_expired, fraxOld];
 export const allBondsMap = allBonds.reduce((prevVal, bond) => {
