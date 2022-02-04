@@ -326,7 +326,6 @@ function App() {
       <ThemeProvider theme={themeMode}>
         <CssBaseline />
         <div className={`app ${isSmallerScreen && "tablet"} ${isSmallScreen && "mobile"} ${theme}`}>
-          <Messages />
           <TopBar theme={theme} toggleTheme={toggleTheme} handleDrawerToggle={handleDrawerToggle} />
           <nav className={classes.drawer}>
             {isSmallerScreen ? (
@@ -337,13 +336,6 @@ function App() {
           </nav>
 
           <div className={`${classes.content} ${isSmallerScreen && classes.contentShift}`}>
-            {oldAssetsDetected &&
-              !hasActiveV1Bonds &&
-              trimmedPath.indexOf("dashboard") === -1 &&
-              oldAssetsEnoughToMigrate && <CallToAction setMigrationModalOpen={setMigrationModalOpen} />}
-
-            {trimmedPath.indexOf("dashboard") === -1 && <Announcement />}
-
             <Switch>
               <Route exact path="/dashboard">
                 <TreasuryDashboard />

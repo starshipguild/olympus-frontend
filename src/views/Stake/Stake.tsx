@@ -22,8 +22,10 @@ import {
   AccordionDetails,
 } from "@material-ui/core";
 import { t, Trans } from "@lingui/macro";
+import { GiHamburgerMenu } from "react-icons/gi";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import RebaseTimer from "../../components/RebaseTimer/RebaseTimer";
 import TabPanel from "../../components/TabPanel";
@@ -161,10 +163,8 @@ function Stake() {
   const setMax = () => {
     if (view === 0) {
       setQuantity(ohmBalance);
-    } else if (!confirmation) {
+    } else {
       setQuantity(sohmBalance);
-    } else if (confirmation) {
-      setQuantity(gOhmAsSohm.toString());
     }
   };
 
@@ -284,37 +284,37 @@ function Stake() {
   }).format(stakingTVL);
   const formattedCurrentIndex = trim(Number(currentIndex), 1);
 
+  const [expanded, setExpanded] = useState<string | false>(false);
+
+  const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
   return (
     <div id="stake-view">
       <Zoom in={true} onEntered={() => setZoomed(true)}>
         <Paper className={`ohm-card`}>
           <Grid container direction="column" spacing={2}>
             <Grid item>
-              <div className="card-header">
-                <Typography variant="h5">Single Stake (3, 3)</Typography>
-                <RebaseTimer />
-              </div>
+              <Box className="card-header">
+                <span className="section-icon">
+                  <GiHamburgerMenu />
+                </span>{" "}
+                <span className="section-title">{t`Stake`}</span>
+              </Box>
             </Grid>
 
             <Grid item>
               <MetricCollection>
+                <RebaseTimer />
+                <div className="divider-container">
+                  <div className="vertical-divider"></div>
+                </div>
                 <Metric
                   className="stake-apy"
-                  label={t`APY`}
+                  label={t`Staking APY`}
                   metric={`${formattedTrimmedStakingAPY}%`}
                   isLoading={stakingAPY ? false : true}
-                />
-                <Metric
-                  className="stake-tvl"
-                  label={t`Total Value Deposited`}
-                  metric={formattedStakingTVL}
-                  isLoading={stakingTVL ? false : true}
-                />
-                <Metric
-                  className="stake-index"
-                  label={t`Current Index`}
-                  metric={`${formattedCurrentIndex} sOHM`}
-                  isLoading={currentIndex ? false : true}
                 />
               </MetricCollection>
             </Grid>
@@ -353,6 +353,8 @@ function Stake() {
                       <Tab label={t`Unstake`} {...a11yProps(1)} />
                     </Tabs>
                     <Grid container className="stake-action-row">
+                      {/*** Please leave this info section for now. Might be useful for UX at a later date. */}
+                      {/* 
                       <Grid item xs={12} sm={8} className="stake-grid-item">
                         {address && !isAllowanceDataLoading ? (
                           (!hasAllowance("ohm") && view === 0) ||
@@ -401,7 +403,7 @@ function Stake() {
                         ) : (
                           <Skeleton width="150px" />
                         )}
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12} sm={4} className="stake-grid-item">
                         <TabPanel value={view} index={0} className="stake-tab-panel">
                           <Box m={-2}>
@@ -417,11 +419,7 @@ function Stake() {
                                   onChangeStake("stake");
                                 }}
                               >
-                                {txnButtonText(
-                                  pendingTransactions,
-                                  "staking",
-                                  `${t`Stake to`} ${confirmation ? " gOHM" : " sOHM"}`,
-                                )}
+                                {txnButtonText(pendingTransactions, "staking", `${t`Stake to`} sSTAR`)}
                               </Button>
                             ) : (
                               <Button
@@ -433,7 +431,7 @@ function Stake() {
                                   onSeekApproval("ohm");
                                 }}
                               >
-                                {txnButtonText(pendingTransactions, "approve_staking", t`Approve`)}
+                                {txnButtonText(pendingTransactions, "approve_staking", t`Approve Staking`)}
                               </Button>
                             )}
                           </Box>
@@ -443,8 +441,7 @@ function Stake() {
                           <Box m={-2}>
                             {isAllowanceDataLoading ? (
                               <Skeleton />
-                            ) : (address && hasAllowance("sohm") && !confirmation) ||
-                              (hasAllowance("gohm") && confirmation) ? (
+                            ) : address && hasAllowance("sohm") ? (
                               <Button
                                 className="stake-button"
                                 variant="contained"
@@ -454,11 +451,7 @@ function Stake() {
                                   onChangeStake("unstake");
                                 }}
                               >
-                                {txnButtonText(
-                                  pendingTransactions,
-                                  "unstaking",
-                                  `${t`Unstake from`} ${confirmation ? " gOHM" : " sOHM"}`,
-                                )}
+                                {txnButtonText(pendingTransactions, "unstaking", `${t`Unstake from`} sSTAR`)}
                               </Button>
                             ) : (
                               <Button
@@ -467,10 +460,10 @@ function Stake() {
                                 color="primary"
                                 disabled={isPendingTxn(pendingTransactions, "approve_unstaking")}
                                 onClick={() => {
-                                  onSeekApproval(confirmation ? "gohm" : "sohm");
+                                  onSeekApproval("sSTAR");
                                 }}
                               >
-                                {txnButtonText(pendingTransactions, "approve_unstaking", t`Approve`)}
+                                {txnButtonText(pendingTransactions, "approve_unstaking", t`Approve Unstaking`)}
                               </Button>
                             )}
                           </Box>
@@ -478,119 +471,51 @@ function Stake() {
                       </Grid>
                     </Grid>
                   </Box>
-                  <ConfirmDialog
-                    quantity={quantity}
-                    currentIndex={currentIndex}
-                    view={view}
-                    onConfirm={setConfirmation}
-                  />
+                  <Box className="stake-amount-row" display="flex" alignItems="center" justifyContent="space-between">
+                    <Grid container alignItems="center" spacing={1}>
+                      <Grid item xs={10} sm={10}>
+                        <FormControl className="ohm-input" variant="outlined" color="primary">
+                          <InputLabel htmlFor="amount-input"></InputLabel>
+                          <OutlinedInput
+                            id="amount-input"
+                            type="number"
+                            placeholder="Enter an amount"
+                            className="stake-input"
+                            value={quantity}
+                            onChange={handleChangeQuantity}
+                            labelWidth={0}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={2} sm={2}>
+                        <Button
+                          className="max-button"
+                          variant="contained"
+                          color="primary"
+                          disabled={isPendingTxn(pendingTransactions, "approve_unstaking")}
+                          onClick={setMax}
+                        >
+                          MAX
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Box>
                   <div className="stake-user-data">
                     <DataRow
-                      title={t`Unstaked Balance`}
+                      title={t`Amount Unstaked`}
                       id="user-balance"
-                      balance={`${trim(Number(ohmBalance), 4)} OHM`}
+                      balance={`${trim(Number(ohmBalance), 4)} STAR`}
                       isLoading={isAppLoading}
                     />
-                    <Accordion className="stake-accordion" square defaultExpanded>
-                      <AccordionSummary expandIcon={<ExpandMore className="stake-expand" />}>
-                        <DataRow
-                          title={t`Total Staked Balance`}
-                          id="user-staked-balance"
-                          balance={`${trimmedBalance} sOHM`}
-                          isLoading={isAppLoading}
-                        />
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <DataRow
-                          title={t`sOHM Balance`}
-                          balance={`${trim(Number(sohmBalance), 4)} sOHM`}
-                          indented
-                          isLoading={isAppLoading}
-                        />
-                        <DataRow
-                          title={`${t`gOHM Balance`}`}
-                          balance={`${trim(Number(gOhmBalance), 4)} gOHM`}
-                          indented
-                          isLoading={isAppLoading}
-                        />
-                        {Number(gOhmOnArbitrum) > 0.00009 && (
-                          <DataRow
-                            title={`${t`gOHM (Arbitrum)`}`}
-                            balance={`${trim(Number(gOhmOnArbitrum), 4)} gOHM`}
-                            indented
-                            {...{ isAppLoading }}
-                          />
-                        )}
-                        {Number(gOhmOnAvax) > 0.00009 && (
-                          <DataRow
-                            title={`${t`gOHM (Avalanche)`}`}
-                            balance={`${trim(Number(gOhmOnAvax), 4)} gOHM`}
-                            indented
-                            {...{ isAppLoading }}
-                          />
-                        )}
-                        {Number(gOhmOnPolygon) > 0.00009 && (
-                          <DataRow
-                            title={`${t`gOHM (Polygon)`}`}
-                            balance={`${trim(Number(gOhmOnPolygon), 4)} gOHM`}
-                            indented
-                            {...{ isAppLoading }}
-                          />
-                        )}
-                        {Number(gOhmOnFantom) > 0.00009 && (
-                          <DataRow
-                            title={`${t`gOHM (Fantom)`}`}
-                            balance={`${trim(Number(gOhmOnFantom), 4)} gOHM`}
-                            indented
-                            {...{ isAppLoading }}
-                          />
-                        )}
-                        {Number(fgohmBalance) > 0.00009 && (
-                          <DataRow
-                            title={`${t`gOHM Balance in Fuse`}`}
-                            balance={`${trim(Number(fgohmBalance), 4)} gOHM`}
-                            indented
-                            isLoading={isAppLoading}
-                          />
-                        )}
-                        {Number(sohmV1Balance) > 0.00009 && (
-                          <DataRow
-                            title={`${t`sOHM Balance`} (v1)`}
-                            balance={`${trim(Number(sohmV1Balance), 4)} sOHM (v1)`}
-                            indented
-                            isLoading={isAppLoading}
-                          />
-                        )}
-                        {Number(wsohmBalance) > 0.00009 && (
-                          <DataRow
-                            title={`${t`wsOHM Balance`} (v1)`}
-                            balance={`${trim(Number(wsohmBalance), 4)} wsOHM (v1)`}
-                            isLoading={isAppLoading}
-                            indented
-                          />
-                        )}
-                        {Number(fiatDaowsohmBalance) > 0.00009 && (
-                          <DataRow
-                            title={t`wsOHM Balance in FiatDAO (v1)`}
-                            balance={`${trim(Number(fiatDaowsohmBalance), 4)} wsOHM (v1)`}
-                            isLoading={isAppLoading}
-                            indented
-                          />
-                        )}
-                        {Number(fsohmBalance) > 0.00009 && (
-                          <DataRow
-                            title={t`sOHM Balance in Fuse (v1)`}
-                            balance={`${trim(Number(fsohmBalance), 4)} sOHM (v1)`}
-                            indented
-                            isLoading={isAppLoading}
-                          />
-                        )}
-                      </AccordionDetails>
-                    </Accordion>
-                    <Divider color="secondary" />
+                    <DataRow
+                      title={t`Amount Staked`}
+                      id="user-staked-balance"
+                      balance={`${trimmedBalance} sSTAR`}
+                      isLoading={isAppLoading}
+                    />
                     <DataRow
                       title={t`Next Reward Amount`}
-                      balance={`${nextRewardValue} sOHM`}
+                      balance={`${nextRewardValue} sSTAR`}
                       isLoading={isAppLoading}
                     />
                     <DataRow
@@ -603,6 +528,8 @@ function Stake() {
                       balance={`${trim(Number(fiveDayRate) * 100, 4)}%`}
                       isLoading={isAppLoading}
                     />
+                    {/*
+                     */}
                   </div>
                 </>
               )}
@@ -610,9 +537,60 @@ function Stake() {
           </Grid>
         </Paper>
       </Zoom>
-      {/* NOTE (appleseed-olyzaps) olyzaps disabled until v2 contracts */}
-      {/* <ZapCta /> */}
-      <ExternalStakePool />
+      <Zoom in={true}>
+        <Box width="97%">
+          <div>
+            <Accordion
+              className="faq-accordion-root"
+              expanded={expanded === "panel1"}
+              onChange={handleChange("panel1")}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header">
+                <Typography>FAQ 1?</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros, vitae egestas
+                  augue. Duis vel est augue.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === "panel2"} onChange={handleChange("panel2")}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
+                <Typography>FAQ 2?</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar diam eros in
+                  elit. Pellentesque convallis laoreet laoreet.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === "panel3"} onChange={handleChange("panel3")}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel3bh-content" id="panel3bh-header">
+                <Typography>FAQ 3</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros, vitae egestas
+                  augue. Duis vel est augue.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === "panel4"} onChange={handleChange("panel4")}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel4bh-content" id="panel4bh-header">
+                <Typography>FAQ 4</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros, vitae egestas
+                  augue. Duis vel est augue.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </div>
+        </Box>
+      </Zoom>
     </div>
   );
 }

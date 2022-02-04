@@ -59,9 +59,12 @@ const TreasuryDashboard = memo(() => {
       >
         <Box className="hero-metrics">
           <Paper className="ohm-card">
-            <Grid className="mint-title" item xs={12}>
-              <MdDashboard /> {t`Dashboard`}
-            </Grid>
+            <Box className="card-header">
+              <span className="section-icon">
+                <MdDashboard />
+              </span>{" "}
+              <span className="section-title">{t`Dashboard`}</span>
+            </Box>
             <MetricCollection>
               <Paper className="ohm-card">
                 <OHMPrice />

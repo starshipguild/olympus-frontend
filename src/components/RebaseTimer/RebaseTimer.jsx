@@ -1,12 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getRebaseBlock, secondsUntilBlock, prettifySeconds } from "../../helpers";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Grid } from "@material-ui/core";
 import "./rebasetimer.scss";
 import { Skeleton } from "@material-ui/lab";
 import { useEffect, useMemo, useState } from "react";
 import { loadAppDetails } from "../../slices/AppSlice";
 import { useWeb3Context } from "../../hooks/web3Context";
 import { Trans } from "@lingui/macro";
+import { Metric } from "@olympusdao/component-library";
 
 function RebaseTimer() {
   const dispatch = useDispatch();
@@ -67,22 +68,46 @@ function RebaseTimer() {
   }, [secondsToRebase, secondsToRefresh]);
 
   return (
-    <Box className="rebase-timer">
-      <Typography variant="body2">
-        {currentBlock ? (
-          secondsToRebase > 0 ? (
-            <>
-              <strong>{rebaseString}&nbsp;</strong>
-              <Trans>to next rebase</Trans>
-            </>
+    // <Box className="rebase-timer">
+    //   <Typography variant="body2">
+    //     {currentBlock ? (
+    //       secondsToRebase > 0 ? (
+    //         <>
+    //           <strong>{rebaseString}&nbsp;</strong>
+    //         </>
+    //       ) : (
+    //         <strong>rebasing</strong>
+    //       )
+    //     ) : (
+    //       <Skeleton width="155px" />
+    //     )}
+    //   </Typography>
+    // </Box>
+    <div className="grid-container">
+      <Box className="metric-container">
+        <Typography
+          variant="h5"
+          color="textSecondary"
+          className="card-title-text"
+          style={{ fontWeight: 400, overflow: "hidden" }}
+        >
+          Next STAR Price
+        </Typography>
+        <Typography variant="h4">
+          {currentBlock ? (
+            secondsToRebase > 0 ? (
+              <>
+                <strong>{rebaseString}&nbsp;</strong>
+              </>
+            ) : (
+              <strong>rebasing</strong>
+            )
           ) : (
-            <strong>rebasing</strong>
-          )
-        ) : (
-          <Skeleton width="155px" />
-        )}
-      </Typography>
-    </Box>
+            <Skeleton width="155px" />
+          )}{" "}
+        </Typography>
+      </Box>
+    </div>
   );
 }
 

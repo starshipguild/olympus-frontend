@@ -6,6 +6,13 @@
   align-items: center;
   overflow: hidden;
 
+  .card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
   .rebase-timer {
     margin: 0 !important;
     line-height: 110% !important;
@@ -120,6 +127,17 @@
   color: #35ee66 !important;
 }
 
+.section-title {
+  font-size: 40px;
+  font-weight: 700;
+}
+.section-icon {
+  font-size: 28px;
+  margin-right: 14px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .stake-top-metrics {
   display: flex;
   width: 100%;
@@ -214,9 +232,9 @@
 }
 
 .ohm-input {
-  max-width: 542px;
+  max-width: 100%;
   width: 100%;
-  margin: 4px !important;
+  margin-right: 22px !important;
 }
 
 .stake-button {
@@ -225,6 +243,18 @@
   min-width: 163px !important;
   max-width: 542px !important;
   height: 43px !important;
+  &.wrap-page {
+    // margin-left: 2%;
+    width: 40%;
+  }
+}
+.max-button {
+  align-self: center;
+  width: 100%;
+  min-width: 163px !important;
+  max-width: 10%!important;
+  height: 43px !important;
+  min-height: 43px !important;
   &.wrap-page {
     // margin-left: 2%;
     width: 40%;
@@ -265,6 +295,12 @@
   height: 50px;
   align-items: center;
   justify-content: center;
+}
+.stake-amount-row {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem 0;
 }
 
 .staking-area {
@@ -351,4 +387,18 @@
 
 .mobile .stake-tab-panel.wrap-page {
   align-items: center;
+}
+
+.vertical-divider {
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  height: 50px;
+}
+.divider-container {
+  display: flex;
+  justify-content: center;
+  max-width: 100% !important;
+}
+
+.stake-input {
+  max-width: 100% !important;
 }

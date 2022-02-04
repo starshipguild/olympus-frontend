@@ -2,3 +2,19 @@
   position: relative;
   width: max-content;
 }
+
+.metric-value {
+  width: 100%;
+}
+.metric-container {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid-container {
+  max-width: 100% important;
+}

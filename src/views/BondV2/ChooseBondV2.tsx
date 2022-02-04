@@ -104,10 +104,11 @@ function ChooseBondV2() {
 
       <Zoom in={true}>
         <Paper className="ohm-card">
-          <Box className="card-header mint-title">
-            <Box>
-              <IoLeaf /> {t`Mint`}
-            </Box>
+          <Box className="card-header">
+            <span className="section-icon">
+              <IoLeaf />
+            </span>
+            <span className="section-title">{t`Mint`}</span>
           </Box>
 
           <MetricCollection>
